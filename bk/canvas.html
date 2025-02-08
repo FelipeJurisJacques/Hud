@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+        let canvas = document.getElementById('canvas')
+        let ctx = canvas.getContext('2d')
+        let width = canvas.width
+        let height = canvas.height
+        let L = width
+        let N = 3 // Número de termos na série de Fourier
+        let step = 0
+
+        function fourierSeries(x) {
+            let sum = 0
+            for (let n = 1; n <= N; n++) {
+                sum += Math.sin(2 * Math.PI * n * x / L) / n
+            }
+            return sum
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, width, height)
+            ctx.beginPath()
+            ctx.moveTo(0, height / 2)
+            for (let x = 0; x < width; x++) {
+                let y = height / 2 + 50 * fourierSeries(x + step)
+                ctx.lineTo(x, y)
+            }
+            step += 1
+            ctx.stroke()
+            // N = parseInt(Math.random() * 9) + 1
+            requestAnimationFrame(draw)
+        }
+        draw()
+    </script>
+</body>
+
+</html>
