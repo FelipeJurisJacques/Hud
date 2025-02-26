@@ -71,22 +71,8 @@ class Hud {
       sizeAttenuation: true
     })
     const vertices = []
-    let angle = 0.0
-    let depth = 0.0
-    const delta = Math.PI * 2.0 / this.#points_length
-    for (let i = 0; i < this.#points_length; i++) {
-      depth = 0.0
-      angle += delta
-      for (let j = 0; j < this.#points_depth; j++) {
-        depth += Math.PI / 2.0 / this.#points_depth
-        let offset = 0.8 + Math.sin(depth) / 5.0
-        this.#offsets.push(offset)
-        vertices.push(
-          Math.cos(angle) * offset,
-          0.0,
-          Math.sin(angle) * offset,
-        )
-      }
+    for (let i = 0; i < this.#points_length * this.#points_depth; i++) {
+      vertices.push(0.0, 0.0, 0.0)
     }
     geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
     const points = new THREE.Points(geometry, material)
